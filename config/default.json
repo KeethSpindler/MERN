@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://fmkita:abcdefG12!@mern.fvtot.mongodb.net/<dbname>?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://fmkita:abcdefG12!@mern.fvtot.mongodb.net/<dbname>?retryWrites=true&w=majority",
+  "jwtToken": "secretstoken"
 }
