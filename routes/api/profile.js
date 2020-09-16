@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const colors = require('colors');
+const request = require('request');
+const config = require('config');
 const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 const Profile = require('../../modles/Profile');
@@ -56,6 +58,35 @@ router.get('/user/:user_id', async (req, res) => {
     if (err.kind == 'ObjectId') {
       return res.status(400).json({ msg: 'Profile Not Found' });
     }
+    res.status(500).send('Sever Error');
+  }
+});
+
+//@route     GET api/profile/github/:username
+//@desc      Get User's Github Repositories
+//@access    Public
+router.get('/github/:username', (req, res) => {
+  try {
+    const options = {
+      uri: encodeURI(
+        `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc`
+      ),
+      method: 'GET',
+      headers: {
+        'user-agent': 'node.js',
+        Authorization: `token ${config.get('gitHubToken')}`,
+      },
+    };
+
+    request(options, (error, response, body) => {
+      if (error) console.error(error);
+      if (response.statusCode != 200) {
+        return res.status(400).json({ msg: 'No Github Profile Found' });
+      }
+      res.json(JSON.parse(body));
+    });
+  } catch (err) {
+    console.error(`${err.message}`.red);
     res.status(500).send('Sever Error');
   }
 });
