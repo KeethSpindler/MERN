@@ -1,4 +1,5 @@
 const express = require('express');
+const colors = require('colors');
 const connectDB = require('./config/db');
 
 const app = express();

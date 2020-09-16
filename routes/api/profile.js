@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const colors = require('colors');
 const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 const Profile = require('../../modles/Profile');
@@ -20,7 +21,7 @@ router.get('/me', auth, async (req, res) => {
 
     return res.status(200).json(profile);
   } catch (err) {
-    console.error(err.message);
+    console.error(`${err.message}`.red);
     res.status(500).send('Server Error');
   }
 });
@@ -33,7 +34,7 @@ router.get('/', async (req, res) => {
     const profiles = await Profile.find().populate('user', ['name', 'avatar']);
     res.json(profiles);
   } catch (err) {
-    console.error(err.message);
+    console.error(`${err.message}`.red);
     res.status(500).send('Sever Error');
   }
 });
@@ -51,7 +52,7 @@ router.get('/user/:user_id', async (req, res) => {
     }
     res.json(profile);
   } catch (err) {
-    console.error(err.message);
+    console.error(`${err.message}`.red);
     if (err.kind == 'ObjectId') {
       return res.status(400).json({ msg: 'Profile Not Found' });
     }
@@ -122,18 +123,40 @@ router.post(
           { $set: profileFields },
           { new: true }
         );
-
+        console.log('Profile Updated'.green);
         return res.json(profile);
       }
       // Create
       profile = new Profile(profileFields);
       await profile.save();
+      console.log('Profile Saved'.green);
       res.json(profile);
     } catch (err) {
-      console.error(err.message);
+      console.error(`${err.message}`.red);
       res.status(500).send('Server Error');
     }
   }
 );
+
+//@route     DELETE api/profile
+//@desc      Delete Profile, User & Posts
+//@access    Private
+router.delete('/', auth, async (req, res) => {
+  try {
+    // @todo - Remove User's Posts
+
+    // Remove Profile
+    await Profile.findOneAndDelete({ user: req.user.id });
+    console.log('Profile Removed'.green);
+    // Remove User
+    await User.findOneAndDelete({ _id: req.user.id });
+    console.log('User Removed'.green);
+
+    res.status(200).json({ msg: 'User Successfully Deleted' });
+  } catch (err) {
+    console.error(`${err.message}`.red);
+    res.status(500).send('Sever Error');
+  }
+});
 
 module.exports = router;
