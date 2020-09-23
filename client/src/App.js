@@ -14,7 +14,7 @@ import store from './store';
 import { loadUser } from './actions/auth';
 import { setAuthToken } from './utils/setAuthToken';
 
-if (localStorage.getItem('toekn')) {
+if (localStorage.getItem('token')) {
   setAuthToken(localStorage.token);
 }
 
