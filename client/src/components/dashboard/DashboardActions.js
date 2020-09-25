@@ -1,9 +1,7 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
-const DashboardActions = ({}) => {
+const DashboardActions = () => {
   return (
     <Fragment>
       <div className='dash-buttons'>
@@ -21,8 +19,4 @@ const DashboardActions = ({}) => {
   );
 };
 
-DashboardActions.propTypes = {};
-
-const mapStateToProps = (state) => ({});
-
-export default connect(mapStateToProps)(DashboardActions);
+export default DashboardActions;
