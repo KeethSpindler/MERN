@@ -211,7 +211,7 @@ router.put(
       const profile = await Profile.findOne({ user: req.user.id });
       profile.experience.unshift(newExp);
       await profile.save();
-      return res.json({ profile });
+      return res.json(profile);
     } catch (err) {
       console.error(`${err.message}`.red);
       res.status(500).send('Sever Error');
@@ -263,7 +263,7 @@ router.put(
       profile.education.unshift(newEdu);
       await profile.save();
       console.log('Education Saved'.green);
-      return res.json({ profile });
+      return res.json(profile);
     } catch (err) {
       console.error(`${err.message}`.red);
       res.status(500).send('Sever Error');

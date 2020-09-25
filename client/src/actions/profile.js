@@ -55,6 +55,7 @@ export const createProfile = (formData, history, edit = false) => async (
   }
 };
 
+// Add Experience
 export const addExperience = (formData, history) => async (dispatch) => {
   try {
     const config = {
@@ -85,6 +86,7 @@ export const addExperience = (formData, history) => async (dispatch) => {
   }
 };
 
+// Add Education
 export const addEducation = (formData, history) => async (dispatch) => {
   try {
     const config = {
@@ -103,6 +105,7 @@ export const addEducation = (formData, history) => async (dispatch) => {
     dispatch(setAlert('Education Added', 'success'));
     history.push('/dashboard');
   } catch (err) {
+    console.log(err.response);
     const errors = err.response.data.errors;
 
     if (errors) {
