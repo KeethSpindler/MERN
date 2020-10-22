@@ -4,17 +4,19 @@ import Moment from 'react-moment';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { post } from 'request';
+import {addLike, removeLike} from '../../actions/post'
 
 const PostItem = ({
   auth,
-  post: { _id, text, name, avatar, user, like, comments, date },
+  post: { _id, text, name, avatar, user, likes, comments, date },
+  addLike, removeLike
 }) => (
-  <div class="posts">
-        <div class="post bg-white p-1 my-1">
+  <div className="posts">
+        <div className="post bg-white p-1 my-1">
           <div>
             <a href="profile.html">
               <img
-                class="round-img"
+                className="round-img"
                 src={avatar}
                 alt=""
               />
@@ -22,33 +24,31 @@ const PostItem = ({
             </a>
           </div>
           <div>
-            <p class="my-1">
+            <p className="my-1">
               {text}
             </p>
-             <p class="post-date">
+             <p className="post-date">
                 Posted on <Moment format='YYYY/MM/DD'>{date}</Moment>
             </p>
-            <button type="button" class="btn btn-light">
-              <i class="fas fa-thumbs-up"/>{` `}
-              {like > 0 &&(
-                <span>{like.length}</span>
-              )}
+            <button type="button" className="btn btn-light" onClick={e => addLike(_id)}>
+              <i className="fas fa-thumbs-up"/>{` `}
+              <span>{likes.length > 0 && <span>{likes.length}</span>}</span>
               
             </button>
-            <button type="button" class="btn btn-light">
-              <i class="fas fa-thumbs-down"></i>
+            <button type="button" className="btn btn-light" onClick={e => removeLike(_id)}>
+              <i className="fas fa-thumbs-down"></i>
             </button>
-            <Link to={`/post/${_id}`} class="btn btn-primary">
+            <Link to={`/post/${_id}`} className="btn btn-primary">
               Discussion {comments.length > 0 && (
-                <span class='comment-count'>{comments.length}</span>
+                <span className='comment-count'>{comments.length}</span>
               )}
             </Link>
             {!auth.loading && user === auth.user._id && (
               <button      
             type="button"
-            class="btn btn-danger"
+            className="btn btn-danger"
           >
-            <i class="fas fa-times"></i>
+            <i className="fas fa-times"></i>
           </button>
             )}
             
@@ -66,4 +66,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, {})(PostItem);
+export default connect(mapStateToProps, {addLike, removeLike})(PostItem);
