@@ -13,7 +13,7 @@ router.get('/', auth, async (req, res) => {
   try {
     const posts = await Post.find().sort({ date: -1 });
     const count = await Post.collection.countDocuments();
-    return res.status(200).json({ count: count, posts: posts });
+    return res.status(200).json( posts );
   } catch (err) {
     console.error(`${err.message}`.red);
     return res.status(500).send('Server Error');
