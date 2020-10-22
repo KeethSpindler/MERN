@@ -1,9 +1,8 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { post } from 'request';
 import {addLike, removeLike, deletePost} from '../../actions/post'
 
 const PostItem = ({
