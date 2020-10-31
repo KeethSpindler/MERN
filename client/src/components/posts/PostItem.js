@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import PropTypes from 'prop-types';
@@ -10,7 +10,8 @@ const PostItem = ({
   post: { _id, text, name, avatar, user, likes, comments, date },
   addLike, 
   removeLike,
-  deletePost
+  deletePost,
+  showActions
 }) => (
   <div className="posts">
         <div className="post bg-white p-1 my-1">
@@ -31,6 +32,7 @@ const PostItem = ({
              <p className="post-date">
                 Posted on <Moment format='YYYY/MM/DD'>{date}</Moment>
             </p>
+            {showActions && <Fragment>
             <button type="button" className="btn btn-light" onClick={e => addLike(_id)}>
               <i className="fas fa-thumbs-up"/>{` `}
               <span>{likes.length > 0 && <span>{likes.length}</span>}</span>
@@ -39,7 +41,8 @@ const PostItem = ({
             <button type="button" className="btn btn-light" onClick={e => removeLike(_id)}>
               <i className="fas fa-thumbs-down"></i>
             </button>
-            <Link to={`/post/${_id}`} className="btn btn-primary">
+
+              <Link to={`/post/${_id}`} className="btn btn-primary">
               Discussion {comments.length > 0 && (
                 <span className='comment-count'>{comments.length}</span>
               )}
@@ -53,11 +56,15 @@ const PostItem = ({
             <i className="fas fa-times"></i>
           </button>
             )}
-            
+            </Fragment>}
           </div>
         </div>
         </div>
 );
+
+PostItem.defaultProps = {
+  showActions: true
+}
 
 PostItem.propTypes = {
   post: PropTypes.object.isRequired,
