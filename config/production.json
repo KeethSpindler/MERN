@@ -1,6 +1,0 @@
-{
-    "mongoURI": "mongodb+srv://fmkita:abcdefG12!@mern.fvtot.mongodb.net/<dbname>?retryWrites=true&w=majority",
-    "jwtToken": "secretstoken",
-    "gitHubToken": "811402e43d749f40ba51056be8b76c455120d188"
-  }
-  
