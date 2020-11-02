@@ -74,8 +74,6 @@ router.post(
       console.log(err.message);
       res.status(500).json({ msg: err.message });
     }
-
-    console.log(req.body);
   }
 );
 

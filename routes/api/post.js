@@ -114,7 +114,6 @@ router.delete('/:id', auth, async (req, res) => {
 
     // Check User
     if (post.user.toString() !== req.user.id) {
-      console.log(post.user.toString() + '\n' + req.user.id);
       return res.status(401).json({ msg: 'User Not Authorized' });
     }
     await post.remove();
